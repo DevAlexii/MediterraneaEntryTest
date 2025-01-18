@@ -9,15 +9,12 @@ public enum Difficulty
 
 public class GameManager : MonoBehaviour
 {
-    private static Difficulty difficulty;
+    private Difficulty difficulty;
 
     void Start()
     {
         DontDestroyOnLoad(gameObject);
-    }
 
-    public static void ChangeDifficulty(int newDifficulty)
-    {
-        difficulty = (Difficulty)newDifficulty;
+        difficulty = (Difficulty)SettingSaver.currentSetting.difficulty;
     }
 }

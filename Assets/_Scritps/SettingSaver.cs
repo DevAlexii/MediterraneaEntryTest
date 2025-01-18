@@ -20,6 +20,7 @@ public class SettingSaver : MonoBehaviour
     {
         filePath = Application.persistentDataPath + "/settings.json";
         LoadSettings();
+        DontDestroyOnLoad(gameObject);
     }
 
     public static void SaveSettings()

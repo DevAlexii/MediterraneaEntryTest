@@ -139,7 +139,6 @@ public class Menu : MonoBehaviour
 
     private void OnDifficultyChange(int value)
     {
-        GameManager.ChangeDifficulty(value);
         SettingSaver.currentSetting.difficulty = value;
         settingChanged = true;
     }
@@ -165,8 +164,8 @@ public class Menu : MonoBehaviour
             qualityDropdown.onValueChanged.AddListener(OnQualityChange);
             resolutionDropdown.onValueChanged.AddListener(OnResolutionChange);
             difficutlyDropdown.onValueChanged.AddListener(OnDifficultyChange);
-            fullScreenToogle.onValueChanged.AddListener((bool value) => 
-            { 
+            fullScreenToogle.onValueChanged.AddListener((bool value) =>
+            {
                 SettingSaver.currentSetting.fullscreen = value;
                 Screen.fullScreen = value;
             });
@@ -186,7 +185,6 @@ public class Menu : MonoBehaviour
         qualityDropdown.value = setting.qualityIndex;
 
         difficutlyDropdown.value = setting.difficulty;
-        GameManager.ChangeDifficulty(setting.difficulty);
 
         fullScreenToogle.isOn = setting.fullscreen;
 
@@ -208,6 +206,7 @@ public class Menu : MonoBehaviour
         foreach (Resolution resolution in resolutions)
         {
             string resolutionString = resolution.width + " x " + resolution.height;
+
             resolutionOptions.Add(resolutionString);
         }
 
@@ -217,6 +216,7 @@ public class Menu : MonoBehaviour
         ChangeResolution(selectedResolution);
         resolutionDropdown.value = selectedResolution;
     }
+
 
     private void SetMaxResolution()
     {
