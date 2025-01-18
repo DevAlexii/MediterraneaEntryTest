@@ -5,19 +5,20 @@ using UnityEngine;
 public class SettingData
 {
     public float masterVolume = 1.0f;
-    public int resolutionIndex = 0;
-    public bool isFullscreen = true;
     public int qualityIndex = 2;
-    public int difficulty = 1;
+    public int resolutionIndex = -1;
+    public int difficulty = 0;
+    public bool fullscreen = true;
 }
 
 public class SettingSaver : MonoBehaviour
 {
-    private static string filePath = Application.persistentDataPath + "/settings.json";
+    private static string filePath;
     public static SettingData currentSetting;
 
     private void Awake()
     {
+        filePath = Application.persistentDataPath + "/settings.json";
         LoadSettings();
     }
 
