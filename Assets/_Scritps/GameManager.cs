@@ -10,6 +10,8 @@ public enum Difficulty
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance;
+
     [Header("Game Setup")]
     [SerializeField]
     private float gameCountDown = 10;
@@ -21,15 +23,28 @@ public class GameManager : MonoBehaviour
     //Actions
     public static Action OnGameOverCallback;
     public static Action OnRestartGameCallback;
+    public static Action<Int32> OnStartGameCallback;
 
 
     private Difficulty difficulty;
 
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     private void Start()
     {
         OnRestartGameCallback += ResetData;
-
         ResetData();
+        OnStartGameCallback?.Invoke(collectableItems);
     }
 
     private void ResetData()
@@ -53,5 +68,15 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         DecrementCountDown();
+    }
+
+    public void IncrementCollectedItems()
+    {
+        collectedItems++;
+        GameUIManager.Instance.UpdateItems(collectedItems, collectableItems);
+        if (collectedItems >= collectableItems)
+        {
+            OnGameOverCallback?.Invoke();
+        }
     }
 }

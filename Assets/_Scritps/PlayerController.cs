@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
 
     bool controllerInputEnabled;
 
+    GameObject pickableItem;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -37,27 +39,61 @@ public class PlayerController : MonoBehaviour
         controllerInputEnabled = true; transform.position = Vector3.zero;
     }
 
-    void FixedUpdate()
+    private void Update()
     {
         if (controllerInputEnabled)
         {
-            float horizontal = Input.GetAxis("Horizontal");
-            float vertical = Input.GetAxis("Vertical");
-
-            // Calcola la direzione di movimento
-            Vector3 direction = new Vector3(horizontal, 0, vertical).normalized;
-
-            rb.velocity = direction * moveSpeed;
-
-            if (direction.magnitude >= 0.1f)
+            if (Input.GetKeyDown(KeyCode.E))
             {
-                Quaternion toRotation = Quaternion.LookRotation(direction);
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.fixedDeltaTime);
-            }
-            else
-            {
-                rb.velocity = Vector3.zero;
+                if (pickableItem) 
+                {
+                    pickableItem.SetActive(false);
+                    GameManager.Instance.IncrementCollectedItems();
+                    GameUIManager.Instance.DeactiveInteractionPopUP();
+                    pickableItem = null;
+                }
             }
         }
     }
+
+void FixedUpdate()
+{
+    if (controllerInputEnabled)
+    {
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
+
+        // Calcola la direzione di movimento
+        Vector3 direction = new Vector3(horizontal, 0, vertical).normalized;
+
+        rb.velocity = direction * moveSpeed;
+
+        if (direction.magnitude >= 0.1f)
+        {
+            Quaternion toRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.fixedDeltaTime);
+        }
+        else
+        {
+            rb.velocity = Vector3.zero;
+        }
+    }
+}
+
+private void OnTriggerEnter(Collider other)
+{
+    if (other.gameObject.layer == LayerMask.NameToLayer("Item"))
+    {
+        GameUIManager.Instance.ShowInteracitonPopUP(other.transform.position);
+        pickableItem = other.gameObject;
+    }
+}
+private void OnTriggerExit(Collider other)
+{
+    if (other.gameObject.layer == LayerMask.NameToLayer("Item"))
+    {
+        GameUIManager.Instance.DeactiveInteractionPopUP();
+        pickableItem = null;
+    }
+}
 }

@@ -24,6 +24,8 @@ public class GameUIManager : MonoBehaviour
     private TMP_Text collectableItemsText;
     [SerializeField]
     private GameObject starsContainer;
+    [SerializeField]
+    private GameObject interactionPopUp;
 
     private float successRatio;
 
@@ -124,5 +126,15 @@ public class GameUIManager : MonoBehaviour
             color.a = alpha;
             image.color = color;
         }
+    }
+
+    public void ShowInteracitonPopUP(Vector3 position)
+    {
+        interactionPopUp.transform.position = position + Vector3.up * .2f;
+        interactionPopUp.SetActive(true);
+    }
+    public void DeactiveInteractionPopUP()
+    {
+        interactionPopUp.SetActive(false);
     }
 }
