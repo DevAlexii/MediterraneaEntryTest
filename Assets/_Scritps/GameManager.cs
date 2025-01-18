@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
     private void ResetData()
     {
         currentCountDown = gameCountDown;
-        collectedItems = 6;
+        collectedItems = 0;
         GameUIManager.Instance.UpdateItems(collectedItems, collectableItems);
     }
 
