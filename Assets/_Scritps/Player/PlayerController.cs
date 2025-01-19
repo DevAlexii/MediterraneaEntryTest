@@ -98,6 +98,7 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Spike"))
         {
+            OnHitEvent();
             controllerInputEnabled = false;
             StartCoroutine(BlockPlayer());
         }
@@ -107,5 +108,11 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(3);
         controllerInputEnabled = true;
+    }
+
+    private void OnHitEvent()
+    {
+        CameraShake.Shake(1f);
+        AudioManager.Instance.PlayClipSound(ClipType.Hit);
     }
 }

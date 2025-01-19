@@ -24,6 +24,7 @@ public class Spike : MonoBehaviour
 
         if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
+
             activated = true;
 
             StartCoroutine(ActivateTrap());
@@ -42,6 +43,7 @@ public class Spike : MonoBehaviour
         Vector3 originalPosition = transform.position;
         Vector3 targetPosition = transform.position + -transform.up * moveDistance;
 
+        AudioManager.Instance.PlayClipSound(ClipType.Spike);
         float moveTimer = 0f;
         while (moveTimer < moveDuration)
         {

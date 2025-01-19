@@ -1828,6 +1828,7 @@ GameObject:
   - component: {fileID: 1345004184}
   - component: {fileID: 1345004185}
   - component: {fileID: 1345004186}
+  - component: {fileID: 1345004187}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1984,6 +1985,18 @@ MonoBehaviour:
   fadeMaterial: {fileID: 2100000, guid: e035a6340fcd9f949a8c3026259ad3c3, type: 2}
   defaultMaterial: {fileID: 2100000, guid: 46c2216cfa3fdd84ea080b6ffb881402, type: 2}
   sphereRadius: 0.2
+--- !u!114 &1345004187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1345004180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a7224c4e681d754b953b4ce159d5b9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1400484066
 GameObject:
   m_ObjectHideFlags: 0

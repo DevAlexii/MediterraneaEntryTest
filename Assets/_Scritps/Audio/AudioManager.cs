@@ -3,7 +3,9 @@ using UnityEngine;
 public enum ClipType
 {
     Button,
-    Collected
+    Collected,
+    Spike,
+    Hit
 }
 
 public enum BackgroundType
@@ -25,6 +27,10 @@ public class AudioManager : MonoBehaviour
     private AudioClip collectedClip;
     [SerializeField]
     private AudioClip gameMusicClip;
+    [SerializeField]
+    private AudioClip spikeClip;
+    [SerializeField]
+    private AudioClip hitClip;
 
     [Header("Audio Sources")]
     [SerializeField]
@@ -56,6 +62,12 @@ public class AudioManager : MonoBehaviour
                 break;
             case ClipType.Collected:
                 UISource.PlayOneShot(collectedClip);
+                break;
+            case ClipType.Spike:
+                UISource.PlayOneShot(spikeClip);
+                break;
+            case ClipType.Hit:
+                UISource.PlayOneShot(hitClip);
                 break;
         }
     }
