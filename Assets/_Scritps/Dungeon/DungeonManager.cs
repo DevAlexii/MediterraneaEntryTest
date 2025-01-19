@@ -65,7 +65,9 @@ public class DungeonManager : MonoBehaviour
 
             if (newDirection == Vector2.zero)
             {
-                break;
+                Debug.LogWarning("No valid directions available. Resetting dungeon generation.");
+                ForceRestart();
+                return;
             }
 
             previousDirection = newDirection;
@@ -161,8 +163,6 @@ public class DungeonManager : MonoBehaviour
         }
     }
 
-
-
     private void SpawnItems(int value)
     {
         itemsCount = value;
@@ -211,4 +211,28 @@ public class DungeonManager : MonoBehaviour
         GenerateDungeon(itemsCount);
     }
 
+
+    private int resetAttempts = 0;
+    private const int maxResetAttempts = 5;
+
+    private void ForceRestart()
+    {
+        if (resetAttempts >= maxResetAttempts)
+        {
+            Debug.LogError("Max reset attempts reached. Dungeon generation failed.");
+            return;
+        }
+
+        resetAttempts++;
+
+        foreach (GameObject room in spawnedRooms.Values)
+        {
+            Destroy(room);
+        }
+
+        spawnedRooms.Clear();
+        GenerateDungeon(itemsCount);
+
+        resetAttempts = 0;
+    }
 }
