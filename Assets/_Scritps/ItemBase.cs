@@ -9,7 +9,8 @@ public class ItemBase : MonoBehaviour
     private float angle = -1;
     private Vector3 startPos;
 
-    private void Start()
+
+    private void OnEnable()
     {
         startPos = transform.position;
     }
