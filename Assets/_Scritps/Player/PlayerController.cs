@@ -1,14 +1,16 @@
-
 using System.Collections;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     [SerializeField]
-    private float speed  = 5f;
+    private float speed = 5f;
     private float moveSpeed;
     [SerializeField]
-    public float rotationSpeed = 700f;
+    private float rotationSpeed = 700f;
+
+    [SerializeField]
+    private GameObject stunEffect;
 
     private Rigidbody rb;
 
@@ -19,8 +21,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        controllerInputEnabled = true;
-        moveSpeed = speed;
+        OnRestart();
     }
 
     private void OnEnable()
@@ -41,9 +42,10 @@ public class PlayerController : MonoBehaviour
     }
     private void OnRestart()
     {
-        controllerInputEnabled = true; 
+        controllerInputEnabled = true;
         transform.position = Vector3.zero;
         moveSpeed = speed;
+        stunEffect.SetActive(false);
     }
 
     private void Update()
@@ -111,9 +113,11 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator SlowDown()
     {
+        stunEffect.SetActive(true);
         moveSpeed = .5f;
         yield return new WaitForSeconds(3);
         moveSpeed = speed;
+        stunEffect.SetActive(false);
     }
 
     private void OnHitEvent()

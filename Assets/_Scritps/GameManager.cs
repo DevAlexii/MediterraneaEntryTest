@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        difficulty = (Difficulty)SettingSaver.currentSetting.difficulty;
         if (Instance == null)
         {
             Instance = this;
