@@ -1,6 +1,14 @@
+using System.Collections;
 using UnityEngine;
 
-public class ItemBase : MonoBehaviour
+
+interface ICollectable
+{
+    public void OnCollected();
+}
+
+
+public class ItemBase : MonoBehaviour,ICollectable
 {
     [SerializeField]
     private float rotationSpeed;
@@ -9,10 +17,33 @@ public class ItemBase : MonoBehaviour
     private float angle = -1;
     private Vector3 startPos;
 
+    public void OnCollected()
+    {
+        StartCoroutine(OnCollectedEvent());
+    }
+
+    IEnumerator OnCollectedEvent()
+    {
+        AudioManager.Instance.PlayClipSound(ClipType.Collected);
+        GetComponent<Collider>().enabled = false;
+        GameManager.Instance.IncrementCollectedItems();
+        GameUIManager.Instance.DeactiveInteractionPopUP();
+
+        float timer = 1;
+        while (timer > 0)
+        {
+            timer -= Time.deltaTime * 4f;
+            transform.localScale = Vector3.one * .2f * timer;
+            yield return null;
+        }
+        this.gameObject.SetActive(false);
+    }
 
     private void OnEnable()
     {
         startPos = transform.position;
+        GetComponent<Collider>().enabled = true;
+        transform.localScale = Vector3.one * .2f;
     }
 
     private void Update()

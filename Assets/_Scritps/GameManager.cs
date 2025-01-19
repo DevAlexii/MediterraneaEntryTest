@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
 
 
     private Difficulty difficulty;
+    private bool timerOn = true;
 
     private void Awake()
     {
@@ -42,6 +43,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        OnGameOverCallback += () => { timerOn = false; };
         OnRestartGameCallback += ResetData;
         ResetData();
         OnStartGameCallback?.Invoke(collectableItems);
@@ -52,6 +54,7 @@ public class GameManager : MonoBehaviour
         currentCountDown = gameCountDown;
         collectedItems = 0;
         GameUIManager.Instance.UpdateItems(collectedItems, collectableItems);
+        timerOn = true ;
     }
 
     private void DecrementCountDown()
@@ -67,7 +70,8 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        DecrementCountDown();
+        if (timerOn)
+            DecrementCountDown();
     }
 
     public void IncrementCollectedItems()

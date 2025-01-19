@@ -3,7 +3,7 @@ using UnityEngine;
 public enum ClipType
 {
     Button,
-    BackgroundMusic,
+    Collected
 }
 
 public enum BackgroundType
@@ -21,7 +21,8 @@ public class AudioManager : MonoBehaviour
     private AudioClip buttonClip;
     [SerializeField]
     private AudioClip menuMusicClip;
-
+    [SerializeField]
+    private AudioClip collectedClip;
     [SerializeField]
     private AudioClip gameMusicClip;
 
@@ -52,6 +53,9 @@ public class AudioManager : MonoBehaviour
         {
             case ClipType.Button:
                 UISource.PlayOneShot(buttonClip);
+                break;
+            case ClipType.Collected:
+                UISource.PlayOneShot(collectedClip);
                 break;
         }
     }
