@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class Spike : MonoBehaviour
 {
-    [SerializeField]
     private float coolDownActivation = 1f;
     private bool activated;
 
@@ -15,6 +14,18 @@ public class Spike : MonoBehaviour
     void Start()
     {
         activated = false;
+        switch (GameManager.Instance.Difficulty)
+        {
+            case Difficulty.Easy:
+                coolDownActivation = 1f;
+                break;
+            case Difficulty.Medium:
+                coolDownActivation = .6f;
+                break;
+            case Difficulty.Hard:
+                coolDownActivation = .2f;
+                break;
+        }
     }
 
     private void OnTriggerEnter(Collider other)

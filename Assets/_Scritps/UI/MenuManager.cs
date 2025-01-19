@@ -169,7 +169,7 @@ public class Menu : MonoBehaviour
             });
             return;
         }
-        Debug.LogError("Error during buttons function bindingfs : references are not properly set");
+        Debug.LogError("Error during buttons function bindings : references are not properly set");
     }
 
     private void IntializeSetting()

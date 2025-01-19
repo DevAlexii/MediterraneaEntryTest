@@ -1,13 +1,10 @@
 using System.Collections;
 using UnityEngine;
 
-
 interface ICollectable
 {
     public void OnCollected();
 }
-
-
 public class ItemBase : MonoBehaviour,ICollectable
 {
     [SerializeField]

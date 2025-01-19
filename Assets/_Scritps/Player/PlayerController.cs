@@ -120,5 +120,6 @@ public class PlayerController : MonoBehaviour
     {
         CameraShake.Shake(1f);
         AudioManager.Instance.PlayClipSound(ClipType.Hit);
+        GameManager.Instance.WasteTime(5);
     }
 }

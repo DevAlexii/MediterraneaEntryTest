@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
 
 
     private Difficulty difficulty;
+    public Difficulty Difficulty => difficulty;
     private bool timerOn = true;
     private int currentScore;
 
@@ -89,5 +90,16 @@ public class GameManager : MonoBehaviour
     public void UpdateScore(int value)
     {
         currentScore = value == 0 ? value : currentScore + value; GameUIManager.Instance.UpdateScore(currentScore);
+        if (difficulty == Difficulty.Easy)
+        {
+            currentCountDown += 5;
+        }
+    }
+    public void WasteTime(float wasteAmount)
+    {
+        if (difficulty == Difficulty.Hard)
+        {
+            currentCountDown -= 5;
+        }
     }
 }
