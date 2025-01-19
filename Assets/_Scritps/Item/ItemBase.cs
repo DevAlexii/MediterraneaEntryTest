@@ -25,6 +25,7 @@ public class ItemBase : MonoBehaviour,ICollectable
     IEnumerator OnCollectedEvent()
     {
         AudioManager.Instance.PlayClipSound(ClipType.Collected);
+        GameManager.Instance.UpdateScore(Random.Range(5, 10));
         GetComponent<Collider>().enabled = false;
         GameManager.Instance.IncrementCollectedItems();
         GameUIManager.Instance.DeactiveInteractionPopUP();

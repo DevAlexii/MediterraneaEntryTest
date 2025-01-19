@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
 
     private Difficulty difficulty;
     private bool timerOn = true;
+    private int currentScore;
 
     private void Awake()
     {
@@ -55,6 +56,7 @@ public class GameManager : MonoBehaviour
         collectedItems = 0;
         GameUIManager.Instance.UpdateItems(collectedItems, collectableItems);
         timerOn = true ;
+        UpdateScore(0);
     }
 
     private void DecrementCountDown()
@@ -82,5 +84,10 @@ public class GameManager : MonoBehaviour
         {
             OnGameOverCallback?.Invoke();
         }
+    }
+
+    public void UpdateScore(int value)
+    {
+        currentScore = value == 0 ? value : currentScore + value; GameUIManager.Instance.UpdateScore(currentScore);
     }
 }

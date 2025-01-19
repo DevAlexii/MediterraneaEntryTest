@@ -3259,7 +3259,6 @@ MonoBehaviour:
   menuMusicClip: {fileID: 8300000, guid: 437459194ec29f34d858fcc790f685a3, type: 3}
   collectedClip: {fileID: 8300000, guid: 5d20939f4d26ee642b6cb75b1bf49776, type: 3}
   gameMusicClip: {fileID: 8300000, guid: 3c28182e03741734f8837179495a5bb1, type: 3}
-  footstepClip: {fileID: 8300000, guid: c9b307434658be74e9d9ad76a62a80b2, type: 3}
   UISource: {fileID: 1044017952}
   backgroundSource: {fileID: 1044017949}
 --- !u!82 &1044017952

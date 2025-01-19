@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -12,6 +11,8 @@ public class GameUIManager : MonoBehaviour
 
     [SerializeField]
     private TMP_Text timerTXT;
+    [SerializeField]
+    private TMP_Text scoreTXT;
     [SerializeField]
     private GameObject gameOverPopup;
     [SerializeField]
@@ -136,5 +137,10 @@ public class GameUIManager : MonoBehaviour
     public void DeactiveInteractionPopUP()
     {
         interactionPopUp.SetActive(false);
+    }
+
+    public void UpdateScore(int value)
+    {
+        scoreTXT.text = "Score: " + value;
     }
 }
