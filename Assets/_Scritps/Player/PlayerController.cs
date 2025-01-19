@@ -1,4 +1,5 @@
 
+using System.Collections;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -92,5 +93,19 @@ public class PlayerController : MonoBehaviour
             GameUIManager.Instance.DeactiveInteractionPopUP();
             pickableItem = null;
         }
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Spike"))
+        {
+            controllerInputEnabled = false;
+            StartCoroutine(BlockPlayer());
+        }
+    }
+
+    IEnumerator BlockPlayer()
+    {
+        yield return new WaitForSeconds(3);
+        controllerInputEnabled = true;
     }
 }

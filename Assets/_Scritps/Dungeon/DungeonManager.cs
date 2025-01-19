@@ -17,6 +17,10 @@ public class DungeonManager : MonoBehaviour
     private GameObject itemPrefab;
     private int itemsCount;
 
+    [Header("Trap Settings")]
+    [SerializeField]
+    private GameObject trapPrefab;
+
     private Dictionary<Vector2, GameObject> spawnedRooms = new Dictionary<Vector2, GameObject>();
     private Vector2 currentPosition = Vector2.zero;
     private Vector2 previousDirection = Vector2.zero;
@@ -53,6 +57,8 @@ public class DungeonManager : MonoBehaviour
             {
                 DestroyWall(newRoom, -previousDirection);
                 DestroyWall(spawnedRooms[currentPosition - previousDirection], previousDirection);
+
+                PlaceTrapInPreviousRoom(currentPosition - previousDirection);
             }
 
             Vector2 newDirection = GetRandomDirection();
@@ -101,6 +107,61 @@ public class DungeonManager : MonoBehaviour
 
         room.transform.GetChild(wallIndex).gameObject.SetActive(false);
     }
+
+
+    private void PlaceTrapInPreviousRoom(Vector2 previousRoomPosition)
+    {
+        if (spawnedRooms.ContainsKey(previousRoomPosition))
+        {
+            GameObject previousRoom = spawnedRooms[previousRoomPosition];
+            List<int> remainingWalls = new List<int> { 0, 1, 2, 3 };
+
+            if (previousDirection == Vector2.up) remainingWalls.Remove(2);
+            else if (previousDirection == Vector2.down) remainingWalls.Remove(3);
+            else if (previousDirection == Vector2.left) remainingWalls.Remove(1);
+            else if (previousDirection == Vector2.right) remainingWalls.Remove(0);
+
+            if (remainingWalls.Count == 0) return;
+
+            int randomWallIndex = remainingWalls[Random.Range(0, remainingWalls.Count)];
+
+            int attempts = 0;
+
+            while (!previousRoom.transform.GetChild(randomWallIndex).gameObject.activeSelf && attempts < 5)
+            {
+                remainingWalls.Remove(randomWallIndex);
+                if (remainingWalls.Count == 0) return; 
+
+                randomWallIndex = remainingWalls[Random.Range(0, remainingWalls.Count)];
+                attempts++;
+            }
+
+            Vector3 trapPosition = previousRoom.transform.GetChild(randomWallIndex).position;
+
+            Quaternion trapRotation = Quaternion.identity;
+
+            if (randomWallIndex == 2)
+            {
+                trapRotation = Quaternion.Euler(90f, 0f, 0f);
+            }
+            else if (randomWallIndex == 3)
+            {
+                trapRotation = Quaternion.Euler(-90f, 0f, 0f);
+            }
+            else if (randomWallIndex == 1)
+            {
+                trapRotation = Quaternion.Euler(0f, 0f, 90f);
+            }
+            else if (randomWallIndex == 0)
+            {
+                trapRotation = Quaternion.Euler(0f, 0f, -90f);
+            }
+
+            GameObject trap = Instantiate(trapPrefab, trapPosition, trapRotation,previousRoom.transform);
+        }
+    }
+
+
 
     private void SpawnItems(int value)
     {
