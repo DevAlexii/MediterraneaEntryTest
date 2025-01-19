@@ -28,7 +28,7 @@ public class CameraShake : MonoBehaviour
 
     private static IEnumerator ShakeCoroutine(float force)
     {
-        float shakeDuration = 0.1f;
+        float shakeDuration = 0.2f;
         float shakeAmount = force; 
         float elapsedTime = 0f;
 

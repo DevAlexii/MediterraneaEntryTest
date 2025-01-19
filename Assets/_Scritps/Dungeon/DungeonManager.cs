@@ -58,7 +58,7 @@ public class DungeonManager : MonoBehaviour
                 DestroyWall(newRoom, -previousDirection);
                 DestroyWall(spawnedRooms[currentPosition - previousDirection], previousDirection);
 
-                PlaceTrapInPreviousRoom(currentPosition - previousDirection);
+                PlaceStuffInPreviousRoom(currentPosition - previousDirection);
             }
 
             Vector2 newDirection = GetRandomDirection();
@@ -109,7 +109,7 @@ public class DungeonManager : MonoBehaviour
     }
 
 
-    private void PlaceTrapInPreviousRoom(Vector2 previousRoomPosition)
+    private void PlaceStuffInPreviousRoom(Vector2 previousRoomPosition)
     {
         if (spawnedRooms.ContainsKey(previousRoomPosition))
         {

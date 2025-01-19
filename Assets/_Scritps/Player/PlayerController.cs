@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float moveSpeed = 5f;
+    [SerializeField]
+    private float speed  = 5f;
+    private float moveSpeed;
+    [SerializeField]
     public float rotationSpeed = 700f;
 
     private Rigidbody rb;
@@ -17,6 +20,7 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         controllerInputEnabled = true;
+        moveSpeed = speed;
     }
 
     private void OnEnable()
@@ -37,7 +41,9 @@ public class PlayerController : MonoBehaviour
     }
     private void OnRestart()
     {
-        controllerInputEnabled = true; transform.position = Vector3.zero;
+        controllerInputEnabled = true; 
+        transform.position = Vector3.zero;
+        moveSpeed = speed;
     }
 
     private void Update()
@@ -99,15 +105,15 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.layer == LayerMask.NameToLayer("Spike"))
         {
             OnHitEvent();
-            controllerInputEnabled = false;
-            StartCoroutine(BlockPlayer());
+            StartCoroutine(SlowDown());
         }
     }
 
-    IEnumerator BlockPlayer()
+    IEnumerator SlowDown()
     {
+        moveSpeed = .5f;
         yield return new WaitForSeconds(3);
-        controllerInputEnabled = true;
+        moveSpeed = speed;
     }
 
     private void OnHitEvent()
